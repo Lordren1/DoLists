@@ -1,0 +1,100 @@
+<%- include('partials/header.ejs'); -%>
+
+<!-- Section for Today's tasks -->
+<div class="box" id="heading">
+  <h1>
+    <%= todayListTitle %> <!-- Display the title for today's list -->
+  </h1>
+</div>
+<div class="box">
+  <% for(let list of todayListItems){ %> <!-- Loop through today's list items -->
+    <div class="list">
+      <form action="/delete" method="post"> <!-- Form for deleting a list item -->
+        <input type="checkbox" onchange="this.form.submit()" name="deleteListId" value="<%= list.id %>">
+      </form>
+      <p id="title<%= list.id %>">
+        <%= list.title %> <!-- Display the title of the list item -->
+      </p>
+      <form class="edit" action="/edit" method="post"> <!-- Form for editing a list item -->
+        <input type="hidden" name="updatedListId" value="<%= list.id %>">
+        <input id="input<%= list.id %>" type="text" name="updatedListTitle" value="<%= list.title %>" autocomplete="off" autofocus="true" hidden="true" />
+        <button id="done<%= list.id %>" class="edit" type="submit" hidden><img class="icon" src="/assests/icons/check-solid.svg" alt="tick image"></button>
+      </form>
+      <button id="edit<%= list.id %>" class="edit" onclick="handler('<%= list.id %>')"><img class="icon" src="/assests/icons/pencil-solid.svg" alt="pencil image"></button>
+    </div>
+  <% } %>
+  <form class="list" action="/add" method="post"> <!-- Form for adding a new list item for today -->
+    <input type="text" name="newList" placeholder="New List" autocomplete="off" autofocus="true" />
+    <button class="add" type="submit" name="list" value="<%= todayListTitle %>">+</button>
+  </form>
+</div>
+
+<!-- Section for This Week's tasks -->
+<div class="box" id="heading">
+  <h1>
+    <%= weekListTitle %> <!-- Display the title for this week's list -->
+  </h1>
+</div>
+<div class="box">
+  <% for(let list of weekListItems){ %> <!-- Loop through this week's list items -->
+    <div class="list">
+      <form action="/delete" method="post"> <!-- Form for deleting a list item -->
+        <input type="checkbox" onchange="this.form.submit()" name="deleteListId" value="<%= list.id %>">
+      </form>
+      <p id="title<%= list.id %>">
+        <%= list.title %> <!-- Display the title of the list item -->
+      </p>
+      <form class="edit" action="/edit" method="post"> <!-- Form for editing a list item -->
+        <input type="hidden" name="updatedListId" value="<%= list.id %>">
+        <input id="input<%= list.id %>" type="text" name="updatedListTitle" value="<%= list.title %>" autocomplete="off" autofocus="true" hidden="true" />
+        <button id="done<%= list.id %>" class="edit" type="submit" hidden><img class="icon" src="/assests/icons/check-solid.svg" alt="tick image"></button>
+      </form>
+      <button id="edit<%= list.id %>" class="edit" onclick="handler('<%= list.id %>')"><img class="icon" src="/assests/icons/pencil-solid.svg" alt="pencil image"></button>
+    </div>
+  <% } %>
+  <form class="list" action="/addWeek" method="post"> <!-- Form for adding a new list item for this week -->
+    <input type="text" name="newWeekList" placeholder="New Week List" autocomplete="off" autofocus="true" />
+    <button class="add" type="submit" name="list" value="<%= weekListTitle %>">+</button>
+  </form>
+</div>
+
+<!-- Section for This Month's tasks -->
+<div class="box" id="heading">
+  <h1>
+    <%= monthListTitle %> <!-- Display the title for this month's list -->
+  </h1>
+</div>
+<div class="box">
+  <% for(let list of monthListItems){ %> <!-- Loop through this month's list items -->
+    <div class="list">
+      <form action="/delete" method="post"> <!-- Form for deleting a list item -->
+        <input type="checkbox" onchange="this.form.submit()" name="deleteListId" value="<%= list.id %>">
+      </form>
+      <p id="title<%= list.id %>">
+        <%= list.title %> <!-- Display the title of the list item -->
+      </p>
+      <form class="edit" action="/edit" method="post"> <!-- Form for editing a list item -->
+        <input type="hidden" name="updatedListId" value="<%= list.id %>">
+        <input id="input<%= list.id %>" type="text" name="updatedListTitle" value="<%= list.title %>" autocomplete="off" autofocus="true" hidden="true" />
+        <button id="done<%= list.id %>" class="edit" type="submit" hidden><img class="icon" src="/assests/icons/check-solid.svg" alt="tick image"></button>
+      </form>
+      <button id="edit<%= list.id %>" class="edit" onclick="handler('<%= list.id %>')"><img class="icon" src="/assests/icons/pencil-solid.svg" alt="pencil image"></button>
+    </div>
+  <% } %>
+  <form class="list" action="/addMonth" method="post"> <!-- Form for adding a new list item for this month -->
+    <input type="text" name="newMonthList" placeholder="New Month List" autocomplete="off" autofocus="true" />
+    <button class="add" type="submit" name="list" value="<%= monthListTitle %>">+</button>
+  </form>
+</div>
+
+<script>
+  // Function to handle the edit button click
+  function handler(id) {
+    document.getElementById("title" + id).setAttribute("hidden", true); // Hide the title
+    document.getElementById("edit" + id).setAttribute("hidden", true); // Hide the edit button
+    document.getElementById("done" + id).removeAttribute("hidden"); // Show the done button
+    document.getElementById("input" + id).removeAttribute("hidden"); // Show the input field
+  }
+</script>
+
+<%- include('partials/footer.ejs'); -%>
